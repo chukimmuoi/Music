@@ -27,6 +27,10 @@ android {
 dependencies {
     final DAGGER_VERSION = '2.14.1'
     final LOG_VERSION = '4.6.0'
+    final SQL_VERSION = '3.1.0'
+    final RX_JAVA_VERSION = '2.1.8'
+    final RX_ANDROID_VERSION = '2.0.1'
+    final RX_KOTLIN_VERSION = '2.2.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -42,4 +46,13 @@ dependencies {
 
     // Log.
     compile "com.jakewharton.timber:timber:$LOG_VERSION"
+
+    // Database.
+    implementation "com.squareup.sqlbrite3:sqlbrite:$SQL_VERSION"
+    implementation "com.squareup.sqlbrite3:sqlbrite-kotlin:$SQL_VERSION"
+
+    // Rx.
+    compile "io.reactivex.rxjava2:rxjava:$RX_JAVA_VERSION"
+    compile "io.reactivex.rxjava2:rxkotlin:$RX_KOTLIN_VERSION"
+    compile "io.reactivex.rxjava2:rxandroid:$RX_ANDROID_VERSION"
 }
