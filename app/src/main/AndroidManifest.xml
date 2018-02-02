@@ -21,6 +21,15 @@
         <service
             android:name=".data.MyService">
         </service>
+
+        <receiver
+            android:name=".data.MyService$SyncOnConnectionAvailable"
+            android:enabled="false">
+
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

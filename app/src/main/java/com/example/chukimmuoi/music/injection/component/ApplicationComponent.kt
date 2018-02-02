@@ -1,5 +1,6 @@
 package com.example.chukimmuoi.music.injection.component
 
+import com.example.chukimmuoi.music.data.MyService
 import com.example.chukimmuoi.music.injection.modul.ApplicationModule
 import dagger.Component
 import javax.inject.Singleton
@@ -17,4 +18,5 @@ import javax.inject.Singleton
 @Component(modules = [(ApplicationModule::class)])
 interface ApplicationComponent {
 
+    fun inject(myService: MyService)
 }
