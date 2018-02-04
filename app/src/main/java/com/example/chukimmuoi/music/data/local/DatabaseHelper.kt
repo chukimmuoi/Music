@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @Singleton
 class DatabaseHelper
 @Inject
-constructor(val db: BriteDatabase) {
+constructor(private val db: BriteDatabase) {
 
     fun setRibots(newRibots: Collection<Ribot>): Observable<Ribot> = Observable.create<Ribot>({ emitter ->
         val transaction = db.newTransaction()

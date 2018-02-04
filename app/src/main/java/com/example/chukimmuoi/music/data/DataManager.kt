@@ -21,8 +21,8 @@ import javax.inject.Singleton
 class DataManager
 @Inject
 constructor(private val mRibotsService: RibotsService,
-                                      private val mPreferencesHelper: PreferencesHelper,
-                                      private val mDatabaseHelper: DatabaseHelper) {
+            private val mPreferencesHelper: PreferencesHelper,
+            private val mDatabaseHelper: DatabaseHelper) {
 
     fun syncRibots(): Observable<Ribot> = mRibotsService.getRibots()
             .concatMap { mDatabaseHelper.setRibots(it) } // Biến đổi dữ liệu đầu vào

@@ -20,7 +20,7 @@ import javax.inject.Singleton
 @Singleton
 class DbOpenHelper
 @Inject
-constructor(@ApplicationContext val context: Context)
+constructor(@ApplicationContext private val context: Context)
     : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {

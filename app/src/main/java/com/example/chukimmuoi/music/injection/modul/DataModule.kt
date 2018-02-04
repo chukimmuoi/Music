@@ -3,6 +3,7 @@ package com.example.chukimmuoi.music.injection.modul
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.chukimmuoi.music.data.local.PreferencesHelper
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -22,12 +23,6 @@ class DataModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(application: Application): SharedPreferences {
-        return application.getSharedPreferences("ribots", Context.MODE_PRIVATE)
+        return application.getSharedPreferences(PreferencesHelper.PREF_FILE_NAME, Context.MODE_PRIVATE)
     }
-
-//    @Provides
-//    @Singleton
-//    fun provideClearSharedPreferences(sharedPreferences: SharedPreferences) {
-//        sharedPreferences.edit().clear().apply()
-//    }
 }
