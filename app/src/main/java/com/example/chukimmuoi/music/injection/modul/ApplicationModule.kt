@@ -20,14 +20,14 @@ import javax.inject.Singleton
  * Cung cấp mức phụ thuộc cấp ứng dụng.
  * */
 @Module
-class ApplicationModule(private val aplication: Application) {
+class ApplicationModule(private val application: Application) {
 
     @Provides
     @Singleton
-    internal fun provideApplication() : Application = aplication
+    internal fun provideApplication() : Application = application
 
     @Provides
     @Singleton
     @ApplicationContext
-    internal fun providesContext() : Context = aplication
+    internal fun providesContext() : Context = application
 }

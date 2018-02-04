@@ -4,7 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.example.chukimmuoi.music.injection.component.ApplicationComponent
 import com.example.chukimmuoi.music.injection.component.DaggerApplicationComponent
+import com.example.chukimmuoi.music.injection.modul.ApiModule
 import com.example.chukimmuoi.music.injection.modul.ApplicationModule
+import com.example.chukimmuoi.music.injection.modul.DataModule
+import com.example.chukimmuoi.music.injection.modul.DbModule
 import timber.log.Timber
 
 /**
@@ -20,6 +23,9 @@ class MusicApplication : Application() {
 
     val applicationComponent: ApplicationComponent = DaggerApplicationComponent.builder()
             .applicationModule(ApplicationModule(this))
+            .dataModule(DataModule())
+            .apiModule(ApiModule())
+            .dbModule(DbModule())
             .build()
 
     companion object {
