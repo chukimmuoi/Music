@@ -39,20 +39,21 @@ open class BaseActivity : AppCompatActivity() {
         // nếu điều này đang được gọi sau khi một sự thay đổi cấu hình.
         mActivityId = savedInstanceState?.getLong(KEY_ACTIVITY_ID) ?: NEXT_ID.getAndIncrement()
 
-        val configPersistentComponent: ConfigPersistentComponent
-        if (sComponentsMap.getValue(mActivityId) == null) {
-            Timber.i("Creating new ConfigPersistentComponent id=%d", mActivityId)
-
-            val component = MusicApplication.get(this).applicationComponent
-            configPersistentComponent = DaggerConfigPersistentComponent.builder().applicationComponent(component).build()
-            sComponentsMap[mActivityId] = configPersistentComponent
-        } else {
-            Timber.i("Reusing ConfigPersistentComponent id=%d", mActivityId)
-
-            configPersistentComponent = sComponentsMap.getValue(mActivityId)
+        if (sComponentsMap[mActivityId] != null) {
+            Timber.i("Reusing ConfigPersistentComponent id = %d", mActivityId)
         }
 
-        activityComponent = configPersistentComponent.activityComponent(activityModule = ActivityModule(this))
+        val configPersistentComponent = sComponentsMap.getOrPut(mActivityId, {// Default value.
+            Timber.i("Creating new ConfigPersistentComponent id = %d", mActivityId)
+
+            val component = (applicationContext as MusicApplication).applicationComponent
+
+            DaggerConfigPersistentComponent.builder()
+                    .applicationComponent(component)
+                    .build()
+        })
+
+        activityComponent = configPersistentComponent.activityComponent(ActivityModule(this))
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

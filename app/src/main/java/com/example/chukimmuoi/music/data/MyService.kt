@@ -14,6 +14,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
 
 class MyService : Service() {
 
@@ -23,9 +24,9 @@ class MyService : Service() {
         }
     }
 
-    lateinit var dataManager: DataManager
+    @Inject lateinit var dataManager: DataManager
 
-    private lateinit var mDisposable: Disposable
+    private var mDisposable: Disposable? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -46,7 +47,7 @@ class MyService : Service() {
             return START_NOT_STICKY
         }
 
-        mDisposable.unSubscribe()
+        mDisposable?.unSubscribe()
         mDisposable = dataManager.syncRibots()
                 .subscribeOn(Schedulers.io())
                 .subscribeBy(
@@ -67,7 +68,7 @@ class MyService : Service() {
     override fun onBind(intent: Intent): IBinder? = null
 
     override fun onDestroy() {
-        mDisposable.unSubscribe()
+        mDisposable?.unSubscribe()
         super.onDestroy()
     }
 

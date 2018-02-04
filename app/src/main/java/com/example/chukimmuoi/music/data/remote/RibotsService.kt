@@ -13,7 +13,7 @@ import retrofit2.http.GET
  * @Project: Music
  * Created by CHUKIMMUOI on 2/1/2018.
  */
-interface RebotsService {
+interface RibotsService {
 
     @GET("ribots")
     fun getRibots() : Observable<List<Ribot>>

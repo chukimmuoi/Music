@@ -18,7 +18,9 @@ import javax.inject.Singleton
  * Created by CHUKIMMUOI on 2/1/2018.
  */
 @Singleton
-class DbOpenHelper @Inject constructor(@ApplicationContext private val context: Context)
+class DbOpenHelper
+@Inject
+constructor(@ApplicationContext val context: Context)
     : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {

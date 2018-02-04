@@ -16,7 +16,9 @@ import javax.inject.Singleton
  * Created by CHUKIMMUOI on 2/1/2018.
  */
 @Singleton
-class PreferencesHelper @Inject constructor(@ApplicationContext private val context: Context) {
+class PreferencesHelper
+@Inject
+constructor(@ApplicationContext val context: Context) {
 
     companion object {
         private const val PREF_FILE_NAME = "android_boilerplate_pref_file"

@@ -10,9 +10,10 @@ package com.example.chukimmuoi.music.ui.basic
  * Created by CHUKIMMUOI on 1/31/2018.
  */
 
-open class BasePresenter<in T : MvpView> : Presenter<T> {
+open class BasePresenter<T : MvpView> : Presenter<T> {
 
     private var mvpView: T? = null
+    val view: T
         get() {
             return mvpView ?: throw MvpViewNotAttachedException()
         }

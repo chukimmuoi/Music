@@ -2,7 +2,7 @@ package com.example.chukimmuoi.music.data.local
 
 import android.database.sqlite.SQLiteDatabase
 import com.example.chukimmuoi.music.data.model.Ribot
-import com.squareup.sqlbrite3.BriteDatabase
+import com.squareup.sqlbrite2.BriteDatabase
 import io.reactivex.Observable
 import timber.log.Timber
 import java.sql.SQLException
@@ -19,9 +19,11 @@ import javax.inject.Singleton
  * Created by CHUKIMMUOI on 2/1/2018.
  */
 @Singleton
-class DatabaseHelper @Inject constructor(private val db: BriteDatabase) {
+class DatabaseHelper
+@Inject
+constructor(val db: BriteDatabase) {
 
-    fun setRebots(newRibots: Collection<Ribot>): Observable<Ribot> = Observable.create<Ribot>({ emitter ->
+    fun setRibots(newRibots: Collection<Ribot>): Observable<Ribot> = Observable.create<Ribot>({ emitter ->
         val transaction = db.newTransaction()
 
         try {
@@ -29,8 +31,8 @@ class DatabaseHelper @Inject constructor(private val db: BriteDatabase) {
 
             newRibots.forEach {
                 val result = db.insert(Db.RibotProfileTable.TABLE_NAME,
-                        SQLiteDatabase.CONFLICT_REPLACE,
-                        Db.RibotProfileTable.toContentValues(it.profile))
+                        Db.RibotProfileTable.toContentValues(it.profile),
+                        SQLiteDatabase.CONFLICT_REPLACE)
                 if (result >= 0) emitter.onNext(it)
             }
 
@@ -44,9 +46,7 @@ class DatabaseHelper @Inject constructor(private val db: BriteDatabase) {
         transaction.end()
     })
 
-    fun getRebots(): Observable<List<Ribot>> {
-        return db.createQuery(Db.RibotProfileTable.TABLE_NAME,
-                "SELECT * FROM ${Db.RibotProfileTable.TABLE_NAME}")
-                .mapToList { Ribot(Db.RibotProfileTable.parseCursor(it)) }
+    fun getRibots(): Observable<List<Ribot>> {
+        return db.createQuery(Db.RibotProfileTable.TABLE_NAME, "SELECT * FROM ${Db.RibotProfileTable.TABLE_NAME}").mapToList { Ribot(Db.RibotProfileTable.parseCursor(it)) }
     }
 }

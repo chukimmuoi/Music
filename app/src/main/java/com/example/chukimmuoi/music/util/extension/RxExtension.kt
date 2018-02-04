@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable
  */
 fun Disposable.unSubscribe() {
 
-    if (!this?.isDisposed) {
-        this?.dispose()
+    if (!this.isDisposed) {
+        this.dispose()
     }
 }

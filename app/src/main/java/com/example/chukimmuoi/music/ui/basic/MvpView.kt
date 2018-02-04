@@ -13,5 +13,4 @@ package com.example.chukimmuoi.music.ui.basic
  * Interface cơ sở
  * Bất kỳ class nào muốn đóng vai trò là View trong mô hình MVP phải implement interface này
  * */
-interface MvpView {
-}
+interface MvpView
