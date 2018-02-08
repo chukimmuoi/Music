@@ -34,6 +34,7 @@ dependencies {
     final RX_ANDROID_VERSION      = '2.0.1'
     final RX_KOTLIN_VERSION       = '2.2.0'
     final RETROFIT_VERSION        = '2.3.0'
+    final GSON_VERSION            = '2.8.2'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -68,6 +69,9 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:$RX_JAVA_VERSION"
     compile "io.reactivex.rxjava2:rxkotlin:$RX_KOTLIN_VERSION"
     compile "io.reactivex.rxjava2:rxandroid:$RX_ANDROID_VERSION"
+
+    // Gson.
+    compile "com.google.code.gson:gson:$GSON_VERSION"
 
     // Retrofit.
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"

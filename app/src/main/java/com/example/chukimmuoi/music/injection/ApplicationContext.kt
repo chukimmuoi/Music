@@ -11,6 +11,7 @@ import javax.inject.Qualifier
  * @Project: Music
  * Created by CHUKIMMUOI on 1/31/2018.
  */
+@MustBeDocumented
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class ApplicationContext
