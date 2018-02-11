@@ -2,7 +2,6 @@ package com.example.chukimmuoi.music.ui.main
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
 import com.example.chukimmuoi.music.R
 import com.example.chukimmuoi.music.data.MyService
 import com.example.chukimmuoi.music.data.model.Ribot
@@ -44,11 +43,11 @@ class MainActivity : BaseActivity(), MainContract.View {
     override fun showRibotsEmpty() {
         ribotsAdapter.ribots = emptyList()
         ribotsAdapter.notifyDataSetChanged()
-        Toast.makeText(this, R.string.empty_ribots, Toast.LENGTH_LONG).show()
+        showToast(R.string.empty_ribots, true)
     }
 
     override fun showError() {
-        Toast.makeText(this, R.string.error_loading_ribots, Toast.LENGTH_LONG).show()
+        showToast(R.string.error_loading_ribots, true)
     }
 
     override fun onDestroy() {
