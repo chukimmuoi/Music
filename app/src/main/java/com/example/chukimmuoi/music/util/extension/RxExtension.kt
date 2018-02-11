@@ -11,6 +11,10 @@ import io.reactivex.disposables.Disposable
  * @Project: Music
  * Created by CHUKIMMUOI on 2/2/2018.
  */
+
+/**
+ * Huỷ bỏ (buộc dừng )các tiến trình rx đang chạy.
+ * */
 fun Disposable.unSubscribe() {
 
     if (!this.isDisposed) {

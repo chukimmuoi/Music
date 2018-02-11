@@ -1,6 +1,5 @@
 package com.example.chukimmuoi.music.util.extension
 
-import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
@@ -16,9 +15,11 @@ import android.net.ConnectivityManager
  * @Project: Music
  * Created by CHUKIMMUOI on 2/2/2018.
  */
-@SuppressLint("MissingPermission")
+
 /**
- * Kiểm tra kết nối internet.
+ * Kiểm tra kết nối internet của thiết bị.
+ *
+ * @return giá trị boolean có kết nối(true), không có kết nối (false).
  * */
 fun Context.isNetworkConnected() : Boolean {
     val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -28,7 +29,7 @@ fun Context.isNetworkConnected() : Boolean {
 /**
  * Tắt bật BroadcastReceiver.
  *
- * @param componentClass: Tên class: [com.example.chukimmuoi.music.data.MyService.SyncOnConnectionAvailable]
+ * @param componentClass: Tên class. eg: ClassName::class.java
  * @param enable trạng thái on(true) hay off(false)
  * */
 fun Context.toggleAndroidComponent(componentClass: Class<*>, enable: Boolean) {

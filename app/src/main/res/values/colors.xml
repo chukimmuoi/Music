@@ -3,4 +3,18 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <!--DIALOG-->
+    <color name="colorDialogBackground">#FFFFFF</color>
+    <color name="colorDialogTitle">#2196F3</color>
+    <color name="colorDialogContent">#000000</color>
+    <color name="colorDialogPositive">#2196F3</color>
+    <color name="colorDialogNegative">#F44336</color>
+    <color name="colorDialogNeutral">#607D8B</color>
+    <color name="colorDialogProgress">#FF9800</color>
+
+    <!--SWIPE REFRESH-->
+    <color name="colorSwipeBlue">#FF00DDFF</color>
+    <color name="colorSwipeGreen">#FF99CC00</color>
+    <color name="colorSwipeOrange">#FFFFBB33</color>
+    <color name="colorSwipeRed">#FFFF4444</color>
 </resources>
