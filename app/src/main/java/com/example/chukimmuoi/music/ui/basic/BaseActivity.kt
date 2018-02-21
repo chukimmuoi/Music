@@ -1,6 +1,8 @@
 package com.example.chukimmuoi.music.ui.basic
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.widget.Toast
@@ -11,6 +13,7 @@ import com.example.chukimmuoi.music.injection.component.ActivityComponent
 import com.example.chukimmuoi.music.injection.component.ConfigPersistentComponent
 import com.example.chukimmuoi.music.injection.component.DaggerConfigPersistentComponent
 import com.example.chukimmuoi.music.injection.modul.ActivityModule
+import com.example.chukimmuoi.music.ui.basic.fragment.BaseFragment
 import timber.log.Timber
 import java.util.concurrent.atomic.AtomicLong
 
@@ -23,7 +26,7 @@ import java.util.concurrent.atomic.AtomicLong
  * @Project: Music
  * Created by CHUKIMMUOI on 1/31/2018.
  */
-open class BaseActivity : AppCompatActivity(), MvpView {
+open class BaseActivity : AppCompatActivity(), MvpView, BaseFragment.OnFragmentListener {
 
     companion object {
         private const val KEY_ACTIVITY_ID = "KEY_ACTIVITY_ID"
@@ -80,6 +83,9 @@ open class BaseActivity : AppCompatActivity(), MvpView {
     }
 
     override fun onStop() {
+        dismissDialog()
+        dismissToast()
+
         super.onStop()
     }
 
@@ -93,9 +99,6 @@ open class BaseActivity : AppCompatActivity(), MvpView {
 
             sComponentsMap.remove(mActivityId)
         }
-
-        dismissDialog()
-        dismissToast()
 
         super.onDestroy()
     }
@@ -150,7 +153,7 @@ open class BaseActivity : AppCompatActivity(), MvpView {
     override fun showDialogProgress(title: String, content: String, isHorizontal: Boolean) {
         dismissDialog()
 
-        val builder = MaterialDialog.Builder(this)
+        val builder = MaterialDialog.Builder(applicationContext)
                 .backgroundColorRes(R.color.colorDialogBackground)
                 .title(title).titleColorRes(R.color.colorDialogTitle)
                 .content(content).contentColorRes(R.color.colorDialogContent)
@@ -207,4 +210,106 @@ open class BaseActivity : AppCompatActivity(), MvpView {
         mToast = null
     }
     //=============================================TOAST==========================================//
+
+    //============================================FRAGMENT========================================//
+    override fun findingFragment(layoutId: Int, fragmentManager: FragmentManager): Fragment {
+        return fragmentManager.findFragmentById(layoutId)
+    }
+
+    override fun findingFragment(layoutId: Int): Fragment {
+        return findingFragment(layoutId, supportFragmentManager)
+    }
+
+    override fun findingFragment(tag: String, fragmentManager: FragmentManager): Fragment {
+        return fragmentManager.findFragmentByTag(tag)
+    }
+
+    override fun findingFragment(tag: String): Fragment {
+        return findingFragment(tag, supportFragmentManager)
+    }
+
+    override fun displayFragment(layoutContainer: Int, fragment: Fragment, tag: String,
+                                 isSaveCache: Boolean, bundle: Bundle?,
+                                 fragmentManager: FragmentManager) {
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        bundle?.let { fragment.arguments = bundle }
+
+        fragmentTransaction.replace(layoutContainer, fragment, tag)
+
+        if (isSaveCache) fragmentTransaction.addToBackStack(tag)
+
+        fragmentTransaction.commit()
+    }
+
+    override fun displayFragment(layoutContainer: Int, fragment: Fragment, tag: String,
+                                 isSaveCache: Boolean, bundle: Bundle?) {
+        displayFragment(layoutContainer, fragment, tag, isSaveCache, bundle, supportFragmentManager)
+    }
+
+    override fun displayMultiFragment(layoutContainer: Int, fragment: Fragment, tag: String,
+                                      tagParent: String, bundle: Bundle?,
+                                      fragmentManager: FragmentManager) {
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        // Hide fragment parent
+        if (tagParent.isEmpty()) {
+            val parentFragment = findingFragment(tagParent)
+
+            parentFragment?.let { fragmentTransaction.hide(it) }
+        }
+
+        // Show fragment if exist
+        if (fragment.isAdded) {
+            fragmentTransaction.show(fragment)
+        } else { // If fragment not exist
+            // Remove old fragment if old fragment = tag
+            val oldFragment = findingFragment(tag)
+            oldFragment?.let { fragmentTransaction.remove(it) }
+
+            // Add new fragment
+            bundle?.let { fragment.arguments = it }
+
+            fragmentTransaction.add(layoutContainer, fragment, tag)
+        }
+
+        fragmentTransaction.commit()
+    }
+
+    override fun displayMultiFragment(layoutContainer: Int, fragment: Fragment, tag: String,
+                                      tagParent: String, bundle: Bundle?) {
+        displayMultiFragment(layoutContainer, fragment, tag, tagParent, bundle, supportFragmentManager)
+    }
+
+    override fun backStackFragmentHome(fragmentManager: FragmentManager) {
+        val countFragment = fragmentManager.backStackEntryCount
+        if (countFragment > 0) {
+            val firstFragment = supportFragmentManager.getBackStackEntryAt(0)
+            supportFragmentManager.popBackStack(firstFragment.id, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        }
+    }
+
+    override fun backStackFragmentHome() {
+        backStackFragmentHome(supportFragmentManager)
+    }
+
+    override fun onBackPressed(fragmentManager: FragmentManager) {
+        super.onBackPressed()
+
+        val countFragment = fragmentManager.backStackEntryCount
+        if (countFragment > 1) {
+            fragmentManager.popBackStack()
+        } else {
+            finish()
+        }
+    }
+
+    override fun onBackPressed() {
+        onBackPressed(supportFragmentManager)
+    }
+
+    override fun onFragmentAction(layoutId: Int, event: Int) {
+
+    }
+    //============================================FRAGMENT========================================//
 }
